@@ -29,7 +29,7 @@ const Dashboard = ({ userData }) => {
 
   const events = filteredJoinedEvents.map((eventItem) => (
     <div key={eventItem._id}>
-      <div className="eventListCard">
+      <div className="dashboardListCard">
         <div className="eventListImgContainer">
           <img
             src={eventItem.image}
@@ -46,16 +46,18 @@ const Dashboard = ({ userData }) => {
 
   return (
     <main>
-      <h1>Welcome, {user.username}</h1>
-      <p>Start to BundleUp!</p>
+      <div className="dashboardCard">
+        <h1>Welcome, {user.username}</h1>
+        <p>Start to BundleUp!</p>
 
-      <h3>Joined Events</h3>
+        <h3>Joined Events</h3>
 
-      {!filteredJoinedEvents.length ? (
-        <h3>No events at the moment</h3>
-      ) : (
-        <ul>{events}</ul>
-      )}
+        {!filteredJoinedEvents.length ? (
+          <h3>No events at the moment</h3>
+        ) : (
+          <ul className="dashboardEventList">{events}</ul>
+        )}
+      </div>
     </main>
   );
 };

@@ -114,6 +114,14 @@ function Event(props) {
         updatedEventData,
         selectedEvent._id
       );
+      let newUserForm = { ...userData };
+      const indexToRemove = newUserForm.joinedEvents.lastIndexOf(
+        selectedEvent._id
+      );
+      if (indexToRemove !== -1) {
+        newUserForm.joinedEvents.splice(indexToRemove, 1);
+      }
+      const updateUser = await userService.update(user._id, newUserForm);
       if (updatedEvent.error) {
         throw new Error(updatedEvent.error);
       }

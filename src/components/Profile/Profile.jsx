@@ -1,11 +1,12 @@
 import { React, useState } from "react";
 import * as userService from "../../services/userService";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Profile.css";
 
 const Profile = (props) => {
   const { userData, setUser, setUserData, handleSignout } = props;
   const userId = userData._id;
+  const navigate = useNavigate;
   const [isAIVisible, setIsAIVisible] = useState(false);
   const [isAIFormVisible, setIsAIFormVisible] = useState(false);
   const [isDeleteVisible, setIsDeleteVisible] = useState(false);
