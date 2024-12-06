@@ -71,11 +71,12 @@ function App() {
                 element={<Deal />}
               />
               <Route
-                path="/account"
+                path="/account/*"
                 element={
                   <Profile
                     userData={userData}
                     setUser={setUser}
+                    setUserData={setUserData}
                     handleSignout={handleSignout}
                   />
                 }

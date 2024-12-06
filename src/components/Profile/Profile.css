@@ -1,3 +1,57 @@
-li {
-    list-style: none;
+.title,
+.link-title {
+  text-decoration: underline;
+  margin: 30px;
+}
+
+.title {
+  font-size: 50px;
+}
+
+.accountInfo li {
+  list-style: none;
+  padding: 5px;
+  margin: 5px;
+  font-size: 20px;
+}
+
+.profile-container {
+  margin: 50px;
+  padding: auto;
+}
+
+.accountInfoCard {
+  background-color: #f4f7f6;
+  margin: 20px;
+  box-shadow: 0 4px 8px #251a2a;
+  border-radius: 10px;
+}
+
+.accountInfo,
+.deleteInfo {
+  margin: 20px;
+  padding: 20px;
+  font-size: 20px;
+}
+
+.accountInfoForm {
+  margin: 30px;
+  padding: 40px;
+  grid-template-columns: 1fr;
+  background-color: #f4f7f6;
+  border-radius: 10px;
+
+  label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 2px;
+  }
+
+  input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
 }

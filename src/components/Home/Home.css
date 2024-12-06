@@ -40,14 +40,14 @@
   border: none;
   border-radius: 30px;
   background-color: #fff;
-  color: #007bff;
+  color: #198754;
   cursor: pointer;
   transition: all 0.3s ease;
   text-decoration: none;
 }
 
 .home-button:hover {
-  background-color: #0056b3;
+  background-color: #25b170;
   color: #fff;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
@@ -60,5 +60,5 @@
 
 .home-button-secondary:hover {
   background-color: #fff;
-  color: #007bff;
+  color: #25b170;
 }

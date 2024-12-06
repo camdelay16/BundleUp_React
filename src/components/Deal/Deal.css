@@ -55,7 +55,7 @@
     padding: 10px 20px;
     font-size: 1.2rem;
     font-weight: bold;
-    background-color: #007bff;
+    background-color: #198754;
     color: white;
     border: none;
     border-radius: 5px;
@@ -64,7 +64,7 @@
   }
 
   button:hover {
-    background-color: #0056b3;
+    background-color: #20a466;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   }
 }

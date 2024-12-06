@@ -12,7 +12,7 @@ const SignUp = (props) => {
     username: "",
     password: "",
     passwordConfirm: "",
-    valid: "",
+    valid: true,
     email: "",
     phoneNumber: "",
     address: "",
@@ -35,6 +35,44 @@ const SignUp = (props) => {
 
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
+
+    // if (event.target.name === "password") {
+    //   validatePassword(event.target.value);
+    // }
+  };
+
+  const validatePassword = (password) => {
+    const minLength = 8;
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasLowercase = /[a-z]/.test(password);
+    const hasNumber = /\d/.test(password);
+    const hasSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(
+      password
+    );
+
+    let passwordError = "";
+    if (password.length < minLength) {
+      passwordError += "Password must be at least 8 characters long.\n";
+    }
+    if (!hasUppercase) {
+      passwordError += "Password must contain at least one uppercase letter.\n";
+    }
+    if (!hasLowercase) {
+      passwordError += "Password must contain at least one lowercase letter.\n";
+    }
+    if (!hasNumber) {
+      passwordError += "Password must contain at least one number.\n";
+    }
+    if (!hasSpecialChar) {
+      passwordError +=
+        "Password must contain at least one special character.\n";
+    }
+
+    setMessage(passwordError);
+    setFormData({
+      ...formData,
+      valid: passwordError === "",
+    });
   };
 
   useEffect(() => {
@@ -44,10 +82,15 @@ const SignUp = (props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!formData.valid) {
+      setMessage("Please fix password errors before submitting.");
+      return;
+    }
     try {
       let isValid = true;
       if (formData.password !== formData.passwordConfirm) {
         isValid = false;
+        setMessage("Passwords must match.");
       }
       setFormData({ ...formData, valid: isValid });
 
@@ -56,6 +99,7 @@ const SignUp = (props) => {
       setUser(newUserResponse.user);
       setUserData(userData);
       navigate("/");
+      setMessage("");
     } catch (err) {
       updateMessage(err.message);
     }
@@ -72,6 +116,7 @@ const SignUp = (props) => {
       address: "",
       type: "Individual",
     });
+    setMessage("");
   };
 
   return (
