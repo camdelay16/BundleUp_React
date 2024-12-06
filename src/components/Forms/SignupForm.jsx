@@ -35,10 +35,6 @@ const SignUp = (props) => {
 
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
-
-    // if (event.target.name === "password") {
-    //   validatePassword(event.target.value);
-    // }
   };
 
   const validatePassword = (password) => {
@@ -53,6 +49,7 @@ const SignUp = (props) => {
     let passwordError = "";
     if (password.length < minLength) {
       passwordError += "Password must be at least 8 characters long.\n";
+      return "more characters";
     }
     if (!hasUppercase) {
       passwordError += "Password must contain at least one uppercase letter.\n";
@@ -66,13 +63,9 @@ const SignUp = (props) => {
     if (!hasSpecialChar) {
       passwordError +=
         "Password must contain at least one special character.\n";
+    } else {
+      return;
     }
-
-    setMessage(passwordError);
-    setFormData({
-      ...formData,
-      valid: passwordError === "",
-    });
   };
 
   useEffect(() => {
@@ -87,6 +80,9 @@ const SignUp = (props) => {
       return;
     }
     try {
+      if (event.target.name === "password") {
+        validatePassword(event.target.value);
+      }
       let isValid = true;
       if (formData.password !== formData.passwordConfirm) {
         isValid = false;
@@ -170,6 +166,7 @@ const SignUp = (props) => {
         </div>
         {!formData.valid && <p className="invalid">Passwords must match.</p>}
         {formData.valid && <p className="valid">Passwords match!</p>}
+        {validatePassword(password)}
 
         <div className="form-group">
           <label htmlFor="phoneNumber">Phone Number</label>

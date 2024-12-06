@@ -47,7 +47,7 @@ const Dashboard = ({ userData }) => {
   return (
     <main>
       <div className="dashboardCard">
-        <h1>Welcome, {user.username}</h1>
+        <h1>Welcome, {userData.username}</h1>
         <p>Start to BundleUp!</p>
 
         <h3>Joined Events</h3>

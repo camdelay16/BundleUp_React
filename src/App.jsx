@@ -16,6 +16,7 @@ export const AuthedUserContext = createContext(null);
 function App() {
   const [user, setUser] = useState(userService.getUser());
   const [userData, setUserData] = useState();
+  const [toggle, setToggle] = useState(false);
 
   useEffect(() => {
     const getUserData = async (id) => {
@@ -30,13 +31,16 @@ function App() {
       }
     };
     user ? getUserData(user._id) : setUserData({});
-  }, []);
+  }, [toggle]);
 
   const handleSignout = () => {
     userService.signout();
     setUser(null);
     setUserData(null);
   };
+
+  console.log("user", user);
+  console.log("userData", userData);
 
   return (
     <>
@@ -46,7 +50,7 @@ function App() {
           handleSignout={handleSignout}
         />
         <Routes>
-          {user ? (
+          {userData ? (
             <>
               <Route
                 path="/"
@@ -78,6 +82,7 @@ function App() {
                     setUser={setUser}
                     setUserData={setUserData}
                     handleSignout={handleSignout}
+                    setToggle={setToggle}
                   />
                 }
               />

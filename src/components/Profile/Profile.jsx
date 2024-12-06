@@ -6,7 +6,8 @@ import DeleteAccount from "./DeleteAccount";
 import AccountInfoForm from "./AccountInfoForm";
 
 const Profile = (props) => {
-  const { userData, setUser, setUserData, handleSignout } = props;
+  console.log(props);
+  const { userData, setUser, setUserData, handleSignout, setToggle } = props;
   const userId = userData._id;
   const navigate = useNavigate;
   const [isAccountInformationVis, setIsAccountInformationVis] = useState(false);
@@ -47,9 +48,10 @@ const Profile = (props) => {
     e.preventDefault();
     try {
       const newUserResponse = await userService.update(userId, formData);
-      setUser(newUserResponse.user);
+      setUser(newUserResponse);
       setIsAIFormVisible(false);
       setIsAccountInformationVis(true);
+      setToggle((prevToggle) => !prevToggle);
       alert("User information updated!");
     } catch (err) {
       alert("Sorry, that didn't work. Try again.");
