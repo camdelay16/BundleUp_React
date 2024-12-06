@@ -39,9 +39,6 @@ function App() {
     setUserData(null);
   };
 
-  console.log("user", user);
-  console.log("userData", userData);
-
   return (
     <>
       <AuthedUserContext.Provider value={user}>

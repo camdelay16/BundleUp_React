@@ -1,5 +1,6 @@
 import { AuthedUserContext } from "../../App";
 import { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import * as eventService from "../../services/eventService";
 
 const Dashboard = ({ userData }) => {
