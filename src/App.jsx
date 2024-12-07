@@ -21,16 +21,18 @@ function App() {
   useEffect(() => {
     const getUserData = async (id) => {
       try {
-        const userData = await userService.getUserData(id);
-        if (userData.error) {
-          throw new Error(userData.error);
+        const userInfo = await userService.getUserData(id);
+        console.log(userInfo);
+        if (userInfo.error) {
+          throw new Error(userInfo.error);
         }
-        setUserData(userData);
+
+        setUserData(userInfo);
       } catch (error) {
         console.log("Error fetching user:", error);
       }
     };
-    user ? getUserData(user._id) : setUserData({});
+    user ? getUserData(user._id) : setUserData(null);
   }, [toggle]);
 
   const handleSignout = () => {
@@ -39,6 +41,7 @@ function App() {
     setUserData(null);
   };
 
+  console.log(userData);
   return (
     <>
       <AuthedUserContext.Provider value={user}>

@@ -1,6 +1,5 @@
 import { AuthedUserContext } from "../../App";
 import { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import * as eventService from "../../services/eventService";
 
 const Dashboard = ({ userData }) => {
@@ -24,6 +23,7 @@ const Dashboard = ({ userData }) => {
 
   const filteredJoinedEvents = joinedEventsList.filter((eventItem) => {
     let userEvents = { ...userData };
+    console.log(userData);
     const attendingEvents = userEvents.joinedEvents;
     return attendingEvents.includes(eventItem._id);
   });
