@@ -22,7 +22,6 @@ const signup = async (formData) => {
 
 const signin = async (user) => {
   try {
-    console.log(`${BASE_URL}/signin`);
     const res = await axios.post(`${BASE_URL}/signin`, user);
     if (res.data.error) {
       throw new Error(res.data.error);

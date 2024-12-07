@@ -72,11 +72,13 @@ function Event(props) {
   };
 
   const handleAttendEvent = async () => {
-    const isAlreadyAttending = selectedEvent?.isAttending?.includes(user._id);
+    const isAlreadyAttending = selectedEvent?.isAttending?.includes(
+      userData._id
+    );
     if (!isAlreadyAttending) {
       const updatedEventData = {
         ...selectedEvent,
-        isAttending: [...(selectedEvent?.isAttending || []), user._id],
+        isAttending: [...(selectedEvent?.isAttending || []), userData._id],
       };
 
       try {
@@ -86,7 +88,7 @@ function Event(props) {
         );
         let newUserForm = { ...userData };
         newUserForm.joinedEvents.push(selectedEvent._id);
-        const updateUser = await userService.update(user._id, newUserForm);
+        const updateUser = await userService.update(userData._id, newUserForm);
         if (updatedEvent.error) {
           throw new Error(updatedEvent.error);
         }
@@ -101,7 +103,7 @@ function Event(props) {
 
   const handleRemoveAttendee = async () => {
     const updatedIsAttending = selectedEvent.isAttending.filter(
-      (userId) => userId !== user._id
+      (userId) => userId !== userData._id
     );
 
     const updatedEventData = {
@@ -121,7 +123,7 @@ function Event(props) {
       if (indexToRemove !== -1) {
         newUserForm.joinedEvents.splice(indexToRemove, 1);
       }
-      const updateUser = await userService.update(user._id, newUserForm);
+      const updateUser = await userService.update(userData._id, newUserForm);
       if (updatedEvent.error) {
         throw new Error(updatedEvent.error);
       }

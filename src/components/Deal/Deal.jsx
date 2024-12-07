@@ -72,11 +72,11 @@ const Deal = (props) => {
   };
 
   const handleTakeDeal = async () => {
-    const isAlreadyAttending = selectedDeal?.joined_users?.includes(user._id);
-    if (!isAlreadyAttending) {
+    const tookDeal = selectedDeal?.joined_users?.includes(userData._id);
+    if (!tookDeal) {
       const updatedDealData = {
         ...selectedDeal,
-        joined_users: [...(selectedDeal?.joined_users || []), user._id],
+        joined_users: [...(selectedDeal?.joined_users || []), userData._id],
       };
 
       try {
@@ -86,7 +86,7 @@ const Deal = (props) => {
         );
         let newUserForm = { ...userData };
         newUserForm.joinedDeals.push(selectedDeal._id);
-        const updateUser = await userService.update(user._id, newUserForm);
+        const updateUser = await userService.update(userData._id, newUserForm);
         if (updatedDeal.error) {
           throw new Error(updatedDeal.error);
         }
@@ -101,7 +101,7 @@ const Deal = (props) => {
 
   const handleReturnDeal = async () => {
     const updatedJoined_users = selectedDeal.joined_users.filter(
-      (userId) => userId !== user._id
+      (userId) => userId !== userData._id
     );
 
     const updatedDealData = {
@@ -152,6 +152,7 @@ const Deal = (props) => {
               setSelectedDeal={setSelectedDeal}
               handleRemoveDeal={handleRemoveDeal}
               user={user}
+              userData={userData}
               handleTakeDeal={handleTakeDeal}
               handleReturnDeal={handleReturnDeal}
             />

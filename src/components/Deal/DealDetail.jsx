@@ -9,6 +9,7 @@ const DealDetail = (props) => {
     user,
     handleTakeDeal,
     handleReturnDeal,
+    userData,
   } = props;
 
   const navigate = useNavigate();
@@ -19,8 +20,6 @@ const DealDetail = (props) => {
   };
 
   const bundleNum = selectedDeal?.joined_users?.length;
-
-  console.log("selectedDeal", selectedDeal);
 
   return (
     <div className="deal-details-container">
@@ -72,7 +71,7 @@ const DealDetail = (props) => {
 
       <div className="deal-footer">
         <button onClick={() => handleCloseDetails()}>Close Details</button>
-        {selectedDeal.author === user._id && (
+        {selectedDeal.author === userData._id && (
           <>
             <button
               className="deal-edit"

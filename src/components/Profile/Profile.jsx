@@ -6,7 +6,6 @@ import DeleteAccount from "./DeleteAccount";
 import AccountInfoForm from "./AccountInfoForm";
 
 const Profile = (props) => {
-  console.log(props);
   const { userData, setUser, setUserData, handleSignout, setToggle } = props;
   const userId = userData._id;
   const navigate = useNavigate;

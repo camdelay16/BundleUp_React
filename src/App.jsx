@@ -22,7 +22,6 @@ function App() {
     const getUserData = async (id) => {
       try {
         const userInfo = await userService.getUserData(id);
-        console.log(userInfo);
         if (userInfo.error) {
           throw new Error(userInfo.error);
         }
@@ -41,7 +40,6 @@ function App() {
     setUserData(null);
   };
 
-  console.log(userData);
   return (
     <>
       <AuthedUserContext.Provider value={user}>
