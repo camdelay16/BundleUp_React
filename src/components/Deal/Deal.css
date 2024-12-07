@@ -69,13 +69,11 @@
   }
 }
 
-
 /* Deal List Component */
 
 .deal-list-container {
   padding: 20px;
   text-align: center;
-  background: linear-gradient(135deg, #2e3192, #1bffff);
 }
 
 .deal-list {
