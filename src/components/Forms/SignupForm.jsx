@@ -49,20 +49,24 @@ const SignUp = (props) => {
     let passwordError = "";
     if (password.length < minLength) {
       passwordError += "Password must be at least 8 characters long.\n";
-      return "more characters";
+      return "Needs more characters (8 total).";
     }
     if (!hasUppercase) {
       passwordError += "Password must contain at least one uppercase letter.\n";
+      return "Must contain uppercase letter.";
     }
     if (!hasLowercase) {
       passwordError += "Password must contain at least one lowercase letter.\n";
+      return "Must contain lowercase letter.";
     }
     if (!hasNumber) {
       passwordError += "Password must contain at least one number.\n";
+      return "Must contain number.";
     }
     if (!hasSpecialChar) {
       passwordError +=
         "Password must contain at least one special character.\n";
+      return "Must contain special character.";
     } else {
       return;
     }
