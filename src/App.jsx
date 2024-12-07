@@ -72,7 +72,12 @@ function App() {
               />
               <Route
                 path="/deals/*"
-                element={<Deal />}
+                element={
+                  <Deal
+                    user={user}
+                    userData={userData}
+                  />
+                }
               />
               <Route
                 path="/account/*"

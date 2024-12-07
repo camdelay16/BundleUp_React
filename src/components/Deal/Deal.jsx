@@ -1,14 +1,17 @@
+import "./Deal.css";
 import { useState, useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import DealList from "./DealList";
-import * as dealService from "../../services/dealService";
-import DealDetails from "./DealDetails";
+import DealDetail from "./DealDetail";
 import DealForm from "./DealForm";
-import "./Deal.css"
+import * as dealService from "../../services/dealService";
+import * as userService from "../../services/userService";
 
-const Deal = () => {
+const Deal = (props) => {
+  const { user, userData } = props;
   const [dealList, setDealList] = useState([]);
   const [selectedDeal, setSelectedDeal] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getDeals = async () => {
@@ -25,7 +28,7 @@ const Deal = () => {
     getDeals();
   }, [selectedDeal]);
 
-  const handleDealSelect = (dealItem) => {
+  const handleViewDeal = (dealItem) => {
     setSelectedDeal(dealItem);
   };
 
@@ -41,24 +44,133 @@ const Deal = () => {
     }
   };
 
+  const handleUpdateDeal = async (formData, dealId) => {
+    try {
+      const updatedDeal = await dealService.update(formData, dealId);
+      if (updatedDeal.error) {
+        throw new Error(updatedDeal.error);
+      }
+      const updatedDealList = dealList.map((deal) =>
+        deal._id !== updatedDeal._id ? deal : updatedDeal
+      );
+      setDealList(updatedDealList);
+      setSelectedDeal(updatedDeal);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleRemoveDeal = async (dealId) => {
+    try {
+      await dealService.deleteDeal(dealId);
+      setDealList(dealList.filter((deal) => deal._id !== dealId));
+      setSelectedDeal(null);
+      navigate(`/deals`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleTakeDeal = async () => {
+    const isAlreadyAttending = selectedDeal?.joined_users?.includes(user._id);
+    if (!isAlreadyAttending) {
+      const updatedDealData = {
+        ...selectedDeal,
+        joined_users: [...(selectedDeal?.joined_users || []), user._id],
+      };
+
+      try {
+        const updatedDeal = await dealService.update(
+          updatedDealData,
+          selectedDeal._id
+        );
+        let newUserForm = { ...userData };
+        newUserForm.joinedDeals.push(selectedDeal._id);
+        const updateUser = await userService.update(user._id, newUserForm);
+        if (updatedDeal.error) {
+          throw new Error(updatedDeal.error);
+        }
+        setSelectedDeal(updatedDeal);
+      } catch (error) {
+        console.error("Error updating deal:", error);
+      }
+    } else {
+      window.alert("You're already attending this deal.");
+    }
+  };
+
+  const handleReturnDeal = async () => {
+    const updatedJoined_users = selectedDeal.joined_users.filter(
+      (userId) => userId !== user._id
+    );
+
+    const updatedDealData = {
+      ...selectedDeal,
+      joined_users: updatedJoined_users,
+    };
+
+    try {
+      const updatedDeal = await dealService.update(
+        updatedDealData,
+        selectedDeal._id
+      );
+      let newUserForm = { ...userData };
+      const indexToRemove = newUserForm.joinedDeals.lastIndexOf(
+        selectedDeal._id
+      );
+      if (indexToRemove !== -1) {
+        newUserForm.joinedDeals.splice(indexToRemove, 1);
+      }
+      const updateUser = await userService.update(user._id, newUserForm);
+      if (updatedDeal.error) {
+        throw new Error(updatedDeal.error);
+      }
+      setSelectedDeal(updatedDeal);
+    } catch (error) {
+      console.error("Error updating deal:", error);
+    }
+  };
+
   return (
     <div>
       <Routes>
         <Route
           path="/"
-          element={<DealList dealList={dealList} handleDealSelect={handleDealSelect} />}
+          element={
+            <DealList
+              dealList={dealList}
+              handleViewDeal={handleViewDeal}
+            />
+          }
         />
         <Route
           path="/:dealId"
-          element={<DealDetails dealList={dealList} selectedDeal={selectedDeal} />}
+          element={
+            <DealDetail
+              dealList={dealList}
+              selectedDeal={selectedDeal}
+              setSelectedDeal={setSelectedDeal}
+              handleRemoveDeal={handleRemoveDeal}
+              user={user}
+              handleTakeDeal={handleTakeDeal}
+              handleReturnDeal={handleReturnDeal}
+            />
+          }
         />
         <Route
           path="/dealForm"
-          element={<DealForm handleAddDeal={handleAddDeal}/>}
+          element={
+            <DealForm
+              handleAddDeal={handleAddDeal}
+              selectedDeal={selectedDeal}
+              handleUpdateDeal={handleUpdateDeal}
+              user={user}
+            />
+          }
         />
       </Routes>
     </div>
-  )
-}
+  );
+};
 
-export default Deal
+export default Deal;
