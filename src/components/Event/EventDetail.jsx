@@ -8,6 +8,7 @@ const EventDetail = (props) => {
     user,
     handleRemoveAttendee,
     setSelectedEvent,
+    userData,
   } = props;
   const navigate = useNavigate();
 
@@ -92,22 +93,24 @@ const EventDetail = (props) => {
         </div>
         <div id="closeEventDetails">
           <button onClick={() => handleCloseDetails()}>Close Details</button>
-          {selectedEvent.author === user._id && (
-            <>
-              <button
-                onClick={() =>
-                  navigate(`/events/eventform`, {
-                    state: { eventData: selectedEvent },
-                  })
-                }
-              >
-                Edit
-              </button>
-              <button onClick={() => handleRemoveEvent(selectedEvent._id)}>
-                Delete
-              </button>
-            </>
-          )}
+          {console.log(userData)}
+          {selectedEvent.author === user?._id ||
+            (userData?._id && (
+              <>
+                <button
+                  onClick={() =>
+                    navigate(`/events/eventform`, {
+                      state: { eventData: selectedEvent },
+                    })
+                  }
+                >
+                  Edit
+                </button>
+                <button onClick={() => handleRemoveEvent(selectedEvent._id)}>
+                  Delete
+                </button>
+              </>
+            ))}
         </div>
       </div>
     </div>

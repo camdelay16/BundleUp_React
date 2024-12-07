@@ -153,6 +153,7 @@ function Event(props) {
               handleAttendEvent={handleAttendEvent}
               handleRemoveAttendee={handleRemoveAttendee}
               setSelectedEvent={setSelectedEvent}
+              userData={userData}
             />
           }
         />
